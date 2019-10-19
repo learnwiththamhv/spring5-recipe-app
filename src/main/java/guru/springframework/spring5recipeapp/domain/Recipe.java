@@ -49,4 +49,14 @@ public class Recipe {
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
     private Set<Category> categories = new HashSet<>();
+
+    public void addIngredient(Ingredient ingredient){
+        ingredient.setRecipe(this);
+        this.ingredients.add(ingredient);
+    }
+
+    public void setNote(Note note){
+        this.note = note;
+        note.setRecipe(this);
+    }
 }
