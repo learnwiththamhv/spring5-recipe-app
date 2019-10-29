@@ -1,19 +1,13 @@
 package guru.springframework.spring5recipeapp.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
 public class Recipe {
 
     @Id
@@ -37,7 +31,7 @@ public class Recipe {
     private Byte[] image;
 
     @OneToOne(cascade = CascadeType.ALL)
-    private Note note;
+    private Notes notes;
 
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
     private Set<Ingredient> ingredients = new HashSet<>();
@@ -50,13 +44,14 @@ public class Recipe {
     )
     private Set<Category> categories = new HashSet<>();
 
-    public void addIngredient(Ingredient ingredient){
+    public Recipe addIngredient(Ingredient ingredient){
         ingredient.setRecipe(this);
         this.ingredients.add(ingredient);
+        return this;
     }
 
-    public void setNote(Note note){
-        this.note = note;
-        note.setRecipe(this);
+    public void setNotes(Notes notes){
+        this.notes = notes;
+        notes.setRecipe(this);
     }
 }
